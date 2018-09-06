@@ -33,11 +33,11 @@ public class KafkaProductController {
     @RequestMapping(value = "/sendMq")
     public ResponseEntity<String> send(@RequestParam(value = "count") long count){
         try {
-            for(int i = 0 ; i < count ; i++){
+//            for(int i = 0 ; i < count ; i++){
                 String key = count + "";
                 String content = key + " :content" ;
                 kafkaTemplate.send(kafkaTopicExample,key , content);
-            }
+//            }
             return ResponseEntity.ok("发送topic="+ kafkaTopicExample +"数据成功");
         }catch (Exception e){
             return ResponseEntity.ok("发送topic="+ kafkaTopicExample +"数据失败");

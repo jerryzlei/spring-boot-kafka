@@ -3,7 +3,11 @@ package com.qudian.kafka.kafkalistener;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.kafka.clients.consumer.ConsumerRecord;
 import org.springframework.kafka.annotation.KafkaListener;
+import org.springframework.kafka.listener.AcknowledgingMessageListener;
+import org.springframework.kafka.support.Acknowledgment;
 import org.springframework.stereotype.Component;
+
+import java.util.List;
 
 /**
  * <p></p>
@@ -15,13 +19,15 @@ import org.springframework.stereotype.Component;
 @Component
 public class SystemUserListener {
 
-    @KafkaListener(topics = {"${kafka_topic_example}"},group = "default_group")
-    public void listen(ConsumerRecord<?, ?> record) {
+    @KafkaListener(topics = {"${kafka_topic_example}"},containerFactory="kafkaListenerContainerFactory")
+    public void onMessage(ConsumerRecord<?, ?> record, Acknowledgment acknowledgment) {
         try {
-            Thread.sleep(10000);
+            Thread.sleep(20000L);
         } catch (InterruptedException e) {
             e.printStackTrace();
         }
-        log.info("Listener1: topic:{}, group:{},key:{},value:{}","default_group",record.topic(), record.key(),record.value().toString());
+//        log.info(record);
+        log.info("Listener1: topic:{}, group:{},key:{},value:{},offset:{}","default_group",record.topic(), record.key(),record.value().toString(),record.offset());
+        acknowledgment.acknowledge();
     }
 }

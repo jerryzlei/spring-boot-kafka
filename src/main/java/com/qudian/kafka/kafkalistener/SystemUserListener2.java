@@ -16,7 +16,7 @@ import java.util.List;
  * @create 2018-02-07 下午3:24
  **/
 @Slf4j
-@Component
+//@Component
 public class SystemUserListener2 {
     @Autowired
     List<KafkaListenerContainerFactory> factories;
